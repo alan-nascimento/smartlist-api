@@ -1,16 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
+require('./src/models/Task');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/smartlist', { useNewUrlParser: true });
-
-require('./src/models/Task');
+mongoose.connect('mongodb://localhost:27017/api', { useNewUrlParser: true });
 
 const Task = mongoose.model('Task');
 
-app.get('/', (req, res) => {
-    res.send('OK');
-});
+app.use('/api', require('./src/routes.js'));
 
 app.listen(3000);
