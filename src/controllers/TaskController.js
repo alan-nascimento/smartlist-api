@@ -3,8 +3,10 @@ const mongoose = require('mongoose');
 const Task = mongoose.model('Task');
 
 module.exports = {
+
     async index(req, res) {
-        const tasks = await Task.find();
+        const { page = 1 } = req.query;
+        const tasks = await Task.paginate({}, { page, limit: 10 });
 
         return res.json(tasks);
     },
