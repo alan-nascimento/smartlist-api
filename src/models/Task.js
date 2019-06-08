@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('../data');
 const mongoosePaginate = require('mongoose-paginate');
 
 const TaskSchema = new mongoose.Schema({
