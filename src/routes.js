@@ -1,10 +1,18 @@
 const express = require('express');
 
 const routes = express.Router();
-const AuthController = require('./controllers/AuthController');
 const TaskController = require('./controllers/TaskController');
+const UserController = require('./controllers/UserController');
+const AppController = require('./controllers/AppController');
+const authMiddleware = require('./middlewares/auth.js');
 
-routes.post('/register', AuthController.store);
+//routes.use(authMiddleware);
+
+//routes.get('/ok', AppController.ok);
+
+routes.post('/register', UserController.store);
+routes.post('/authenticate', UserController.auth);
+
 routes.get('/tasks', TaskController.index);
 routes.get('/tasks/:id', TaskController.show);
 routes.post('/tasks', TaskController.store);
