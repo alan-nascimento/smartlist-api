@@ -1,5 +1,9 @@
-#dependencies
+# Dependencies
 node_modules
 
-#data
+# Data
 database
+
+# Cache
+yarn.lock
+package-lock.json
