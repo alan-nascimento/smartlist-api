@@ -1,25 +1,27 @@
-const mongoose = require('../data');
-const mongoosePaginate = require('mongoose-paginate');
+import mongoosePaginate from 'mongoose-paginate';
 
-const TaskSchema = new mongoose.Schema({
+import { Schema, model } from 'mongoose';
+
+const Task = new Schema(
+  {
     description: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     priority: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     date: {
-        type: Date,
-        required: true
+      type: Date,
+      required: true,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
-});
+  },
+  {
+    timestamps: true,
+  },
+);
 
-TaskSchema.plugin(mongoosePaginate);
+Task.plugin(mongoosePaginate);
 
-mongoose.model('Task', TaskSchema);
+export default model('Task', Task);

@@ -14,5 +14,15 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint"],
-  "rules": {}
+  "rules": {
+    "func-names": "off"
+  },
+  "overrides": [
+    {
+      "files": ["./src/app/models/User.ts"],
+      "rules": {
+        "no-unused-vars": "off"
+      }
+    }
+  ]
 }
