@@ -1,57 +1,34 @@
-const mongoose = require('../../data');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import { Request, Response } from 'express';
 
-import User from '@models/User';
+import User from '../models/User';
 
-const authConfig = require('../../config/auth.json');
+class UserController {
+  public store = async (req: Request, res: Response): Promise<Response> => {
+    const userExists = await User.findOne({ email: req.body.email });
 
-function generateToken(params = {}) {
-  return jwt.sign(params, authConfig.secret, {
-    expiresIn: 86400,
-  });
+    if (userExists) {
+      return res.status(400).json({ error: 'User already exists.' });
+    }
+
+    const { _id, email, password } = await User.create(req.body);
+
+    return res.json({
+      id: _id,
+      email,
+      password,
+    });
+  }
+
+  // public update = async (req: Request, res: Response): Promise<Response> => {
+  //   try {
+  //     const { id: _id } = req.params;
+  //     const user = await User.findOneAndUpdate(_id, req.body);
+
+  //     return res.status(200).json(user);
+  //   } catch (err) {
+  //     return res.status(400).json({ error: 'Cannot update user' });
+  //   }
+  // }
 }
 
-export default {
-  async auth(req, res) {
-    try {
-      const { email, password } = req.body;
-
-      const user = await User.findOne({ email }).select('+password');
-
-      if (!user) return res.status(400).send({ error: 'User not found' });
-
-      if (await !bcrypt.compare(password, user.password))
-        return res.status(400).send({ error: 'Invalid password' });
-
-      user.password = undefined;
-
-      return res.send({
-        user,
-        token: generateToken({ id: user.id }),
-      });
-    } catch (err) {
-      return res.status(400).send({ error: 'Authentication failed' });
-    }
-  },
-
-  async store(req, res) {
-    try {
-      const { email } = req.body;
-
-      if (await User.findOne({ email }))
-        return res.status(400).send({ error: 'User already exists' });
-
-      const user = await User.create(req.body);
-
-      user.password = undefined;
-
-      return res.send({
-        user,
-        token: generateToken({ id: user.id }),
-      });
-    } catch (err) {
-      return res.status(400).send({ error: 'Registration failed' });
-    }
-  },
-};
+export default new UserController();

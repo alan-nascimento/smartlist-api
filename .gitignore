@@ -6,3 +6,6 @@ database
 # Cache
 yarn.lock
 package-lock.json
+
+# Enviroment
+.env

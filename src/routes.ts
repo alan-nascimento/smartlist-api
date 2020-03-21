@@ -1,28 +1,22 @@
 import { Router } from 'express';
 
-import UserController from './app/controllers/UserController';
-// const TaskController = require('./controllers/TaskController');
-// const AppController = require('./controllers/AppController');
-// const authMiddleware = require('./middlewares/auth.js');
+import authMiddleware from '@middlewares/auth';
+import UserController from '@controllers/UserController';
+import TaskController from '@controllers/TaskController';
+import SessionController from '@controllers/SessionController';
 
 const routes = Router();
 
-routes.get('/', (req, res) => res.send('Hello World!'));
+routes.post('/users', UserController.store);
 
-//routes.use(authMiddleware);
+routes.post('/sessions', SessionController.store);
 
-routes.post('/register', UserController.store);
+routes.use(authMiddleware);
 
-routes.post('/authenticate', UserController.auth);
+routes.get('/tasks', TaskController.index);
 
-// routes.get('/tasks', TaskController.index);
+routes.post('/tasks', TaskController.store);
 
-// routes.get('/tasks/:id', TaskController.show);
-
-// routes.post('/tasks', TaskController.store);
-
-// routes.put('/tasks/:id', TaskController.update);
-
-// routes.delete('/tasks/:id', TaskController.destroy);
+routes.delete('/tasks/:id', TaskController.destroy);
 
 export default routes;
