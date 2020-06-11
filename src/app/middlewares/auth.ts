@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 import { promisify } from 'util';
-import { NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 
 import authConfig from '@config/auth';
 
-export default async (req: any, res: any, next: NextFunction): Promise<any> => {
+export default async (req: any, res: Response, next: NextFunction): Promise<any> => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -16,7 +16,7 @@ export default async (req: any, res: any, next: NextFunction): Promise<any> => {
   try {
     const decoded: any = await promisify(jwt.verify)(token, authConfig.secret);
 
-    req.userId = decoded.id;
+    req.user_id = decoded.id;
 
     return next();
   } catch (err) {

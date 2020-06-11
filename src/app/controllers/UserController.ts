@@ -10,25 +10,25 @@ class UserController {
       return res.status(400).json({ error: 'User already exists.' });
     }
 
-    const { _id, email, password } = await User.create(req.body);
+    const { _id, email } = await User.create(req.body);
 
     return res.json({
       id: _id,
       email,
-      password,
     });
   }
 
-  // public update = async (req: Request, res: Response): Promise<Response> => {
-  //   try {
-  //     const { id: _id } = req.params;
-  //     const user = await User.findOneAndUpdate(_id, req.body);
+  public update = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const { id: _id } = req.params;
 
-  //     return res.status(200).json(user);
-  //   } catch (err) {
-  //     return res.status(400).json({ error: 'Cannot update user' });
-  //   }
-  // }
+      await User.findOneAndUpdate({ _id }, req.body);
+
+      return res.status(200).json({ message: 'User updated with success' });
+    } catch (err) {
+      return res.status(400).json({ error: 'Cannot update user' });
+    }
+  }
 }
 
 export default new UserController();
