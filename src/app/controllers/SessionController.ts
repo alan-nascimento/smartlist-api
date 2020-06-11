@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
 
-import User from '../models/User';
-import authConfig from '../../config/auth';
+import User from '@models/User';
+import authConfig from '@config/auth';
 
 class SessionController {
   public store = async (req: Request, res: Response): Promise<Response> => {

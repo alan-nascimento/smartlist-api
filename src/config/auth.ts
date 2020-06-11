@@ -1,4 +1,4 @@
 export default {
-  secret: 'fd21fw65q59daf59sa6f5s',
+  secret: `${process.env.SECRET_KEY}`,
   expiresIn: '7d',
 };
