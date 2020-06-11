@@ -5,9 +5,9 @@ import Task from '@models/Task';
 class TaskController {
   public index = async (req: Request, res: Response): Promise<Response> => {
     try {
-      const { user_id, page = 2, limit = 1 } = req.query;
+      const { user_id } = req.query;
 
-      const tasks = await Task.find({ user_id }).skip(page).limit(limit);
+      const tasks = await Task.find({ user_id });
 
       return res.json(tasks);
     } catch (err) {

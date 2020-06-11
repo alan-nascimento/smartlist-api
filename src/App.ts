@@ -22,10 +22,11 @@ class App {
 
   private database(): void {
     this.mongodb.connect(
-      `${process.env.MONGO_URL}`,
+      `${process.env.MONGODB_URI}`,
       { useNewUrlParser: true, useUnifiedTopology: true },
     );
   }
+
 
   private routes(): void {
     this.server.use(routes);
