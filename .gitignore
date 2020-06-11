@@ -1,10 +1,7 @@
 # Dependencies
 node_modules
 
-database
-
 # Cache
-yarn.lock
 package-lock.json
 
 # Enviroment

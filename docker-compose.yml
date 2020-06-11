@@ -6,6 +6,8 @@ services:
     image: mongo:latest
     ports:
       - '27017:27017'
+    volumes:
+      - .:/usr/database
 
   app:
     container_name: smartlist-api
